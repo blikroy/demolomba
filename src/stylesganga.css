@@ -646,12 +646,13 @@ button {
   display: block;
   font-size: 12px;
   color: var(--text-gray);
-  text-decoration: line-through;
+  
   margin-bottom: 4px;
 }
 
 .original-price .crossed {
   margin-left: 5px;
+  text-decoration: line-through;
 }
 
 .sale-price {
