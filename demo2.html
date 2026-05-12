@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Barro Alfareria</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #f5f0ea;
+    --warm-white: #faf8f5;
+    --dark: #1a1a1a;
+    --mid-gray: #888;
+    --light-gray: #e8e4de;
+    --teal: #4a9a8c;
+    --teal-light: #6bb5a8;
+    --text: #2c2c2c;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--warm-white);
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* ── TOP BAR ── */
+  .top-bar {
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--light-gray);
+    padding: 8px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .top-bar-search { display: flex; align-items: center; gap: 6px; color: var(--mid-gray); font-size: 12px; cursor: pointer; }
+  .top-bar-logo { font-family: var(--font-display); font-size: 16px; letter-spacing: 0.02em; font-weight: 400; }
+  .top-bar-logo img { height: 36px; }
+  .top-bar-logo span { font-size: 13px; font-family: var(--font-body); color: var(--mid-gray); }
+  .top-bar-cart { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--mid-gray); cursor: pointer; }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--light-gray);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text);
+  }
+  nav a { text-decoration: none; color: inherit; opacity: 0.85; transition: opacity .2s; white-space: nowrap; }
+  nav a:hover { opacity: 1; }
+  nav a.highlight { color: var(--teal); font-weight: 500; }
+
+  /* ── ANNOUNCEMENT ── */
+  .announcement {
+    background: var(--teal);
+    color: #fff;
+    text-align: center;
+    padding: 6px;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    background: linear-gradient(135deg, #2e2e2e 0%, #1a1a1a 100%);
+    overflow: hidden;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1400&q=80') center/cover no-repeat;
+    opacity: 0.55;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 60px 40px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .hero-left h1 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 48px);
+    color: #fff;
+    font-weight: 400;
+    line-height: 1.15;
+    max-width: 420px;
+  }
+  .hero-right {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3.5vw, 42px);
+    color: #fff;
+    font-style: italic;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .hero-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+  }
+  .hero-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; }
+  .hero-dot.active { background: #fff; }
+
+  /* ── SECTION BASE ── */
+  .section { padding: 48px 40px; }
+  .section-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--mid-gray);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .section-title .info-icon { width: 18px; height: 18px; border: 1px solid var(--mid-gray); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--mid-gray); cursor: pointer; }
+
+  /* ── CATEGORIES ── */
+  .categories { background: var(--warm-white); padding: 36px 40px; }
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 12px;
+  }
+  .cat-item { text-align: center; cursor: pointer; }
+  .cat-thumb {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .cat-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s; }
+  .cat-item:hover .cat-thumb img { transform: scale(1.05); }
+  .cat-label { font-size: 10px; color: var(--mid-gray); line-height: 1.3; }
+
+  /* ── STORY BANNER ── */
+  .story-banner {
+    background: #1a1a1a;
+    position: relative;
+    min-height: 260px;
+    display: flex;
+    overflow: hidden;
+  }
+  .story-banner-img {
+    width: 50%;
+    position: relative;
+  }
+  .story-banner-img img { width: 100%; height: 100%; object-fit: cover; }
+  .story-banner-text {
+    width: 50%;
+    display: flex;
+    align-items: flex-end;
+    padding: 40px;
+    background: #1a1a1a;
+  }
+  .story-banner-text h2 {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 40px);
+    color: #fff;
+    font-weight: 400;
+    line-height: 1.2;
+    font-style: italic;
+  }
+
+  /* ── PRODUCTS GRID ── */
+  .products-section { background: var(--warm-white); padding: 40px; }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .product-card { cursor: pointer; }
+  .product-img {
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 4px;
+    position: relative;
+    background: var(--cream);
+    margin-bottom: 10px;
+  }
+  .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+  .product-card:hover .product-img img { transform: scale(1.06); }
+  .product-badge {
+    position: absolute;
+    top: 8px; left: 8px;
+    background: var(--teal);
+    color: #fff;
+    font-size: 9px;
+    padding: 3px 7px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .product-info {}
+  .product-name { font-size: 12px; font-weight: 500; margin-bottom: 2px; }
+  .product-meta { font-size: 10px; color: var(--mid-gray); margin-bottom: 4px; }
+  .product-price { font-size: 13px; font-weight: 500; }
+  .product-price .original { text-decoration: line-through; color: var(--mid-gray); font-size: 11px; margin-right: 4px; }
+  .product-price .sale { color: var(--teal); }
+  .product-installment { font-size: 10px; color: var(--mid-gray); }
+  .product-installment span { color: var(--teal); }
+
+  /* ── TAGLINE ── */
+  .tagline {
+    text-align: center;
+    padding: 32px 40px;
+    background: var(--warm-white);
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--text);
+  }
+
+  /* ── NEW IN / SLIDER ── */
+  .new-in { background: var(--warm-white); padding: 32px 40px; }
+  .new-in-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .new-in-header h3 { font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; }
+  .slider-arrows { display: flex; gap: 8px; }
+  .arrow-btn {
+    width: 28px; height: 28px;
+    border: 1px solid var(--light-gray);
+    background: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    color: var(--text);
+    transition: all .2s;
+  }
+  .arrow-btn:hover { background: var(--text); color: #fff; border-color: var(--text); }
+  .new-in-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  /* ── FEATURED PRODUCT ── */
+  .featured-product {
+    background: var(--warm-white);
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 0;
+    align-items: center;
+  }
+  .featured-thumbs { display: flex; flex-direction: column; gap: 10px; width: 80px; }
+  .featured-thumb {
+    width: 80px; height: 80px;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .featured-thumb.active { border-color: var(--teal); }
+  .featured-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .featured-main-img {
+    flex: 1;
+    max-width: 320px;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 6px;
+  }
+  .featured-main-img img { width: 100%; height: 100%; object-fit: cover; }
+  .featured-left {
+    display: flex;
+    gap: 16px;
+  }
+  .featured-info { padding: 20px 40px; }
+  .featured-info .brand { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mid-gray); margin-bottom: 4px; }
+  .featured-info h2 { font-family: var(--font-display); font-size: 26px; font-weight: 400; margin-bottom: 16px; }
+  .featured-info p { font-size: 12px; color: var(--mid-gray); line-height: 1.6; margin-bottom: 20px; max-width: 380px; }
+  .featured-price-main { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  .featured-price-main .original { font-size: 14px; text-decoration: line-through; color: var(--mid-gray); margin-right: 8px; font-weight: 400; }
+  .featured-installment { font-size: 12px; color: var(--mid-gray); margin-bottom: 20px; }
+  .featured-installment span { color: var(--teal); }
+  .qty-selector {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .qty-btn {
+    width: 32px; height: 32px;
+    border: 1px solid var(--light-gray);
+    background: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .qty-num { font-size: 14px; min-width: 20px; text-align: center; }
+  .btn-add-cart {
+    background: var(--dark);
+    color: #fff;
+    border: none;
+    padding: 13px 32px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    border-radius: 3px;
+    font-family: var(--font-body);
+    transition: background .2s;
+  }
+  .btn-add-cart:hover { background: #333; }
+
+  /* ── FULL WIDTH GALLERY ── */
+  .fullwidth-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 380px;
+  }
+  .gallery-half { overflow: hidden; position: relative; }
+  .gallery-half img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ── CATEGORIES WIDE ── */
+  .wide-cats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    background: var(--cream);
+    padding: 48px 40px;
+    gap: 40px;
+  }
+  .wide-cat-block {}
+  .wide-cat-block h3 { font-family: var(--font-display); font-size: 22px; font-weight: 400; margin-bottom: 6px; }
+  .wide-cat-block p { font-size: 12px; color: var(--mid-gray); margin-bottom: 16px; }
+  .btn-outline {
+    display: inline-block;
+    border: 1px solid var(--dark);
+    padding: 8px 24px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    color: var(--dark);
+    cursor: pointer;
+    transition: all .2s;
+    background: none;
+    font-family: var(--font-body);
+  }
+  .btn-outline:hover { background: var(--dark); color: #fff; }
+
+  /* ── COLLECTIONS ── */
+  .collections { background: var(--warm-white); padding: 48px 40px; }
+  .coll-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .coll-card {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .coll-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+  .coll-card:hover img { transform: scale(1.05); }
+  .coll-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+    color: #fff;
+    padding: 24px 16px 14px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  /* ── BENEFITS ── */
+  .benefits {
+    background: var(--warm-white);
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    border-top: 1px solid var(--light-gray);
+  }
+  .benefit-item { text-align: center; }
+  .benefit-icon { font-size: 22px; margin-bottom: 8px; }
+  .benefit-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .benefit-desc { font-size: 11px; color: var(--mid-gray); }
+  .benefit-highlight { color: var(--teal); font-weight: 600; }
+
+  /* ── NEWSLETTER ── */
+  .newsletter {
+    background: url('https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1400&q=80') center/cover no-repeat;
+    position: relative;
+    padding: 60px 40px;
+    text-align: center;
+  }
+  .newsletter::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(20,18,16,0.75);
+  }
+  .newsletter-content { position: relative; z-index: 2; max-width: 480px; margin: 0 auto; }
+  .newsletter-content p { color: rgba(255,255,255,0.7); font-size: 12px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .newsletter-logo {
+    font-family: var(--font-display);
+    font-size: 40px;
+    color: #fff;
+    letter-spacing: 0.12em;
+    margin-bottom: 24px;
+    font-weight: 400;
+    font-style: italic;
+  }
+  .newsletter-form {
+    display: flex;
+    gap: 0;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+  .newsletter-form input {
+    flex: 1;
+    padding: 11px 16px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 12px;
+    outline: none;
+    font-family: var(--font-body);
+  }
+  .newsletter-form input::placeholder { color: rgba(255,255,255,0.5); }
+  .newsletter-form button {
+    padding: 11px 20px;
+    background: #fff;
+    color: var(--dark);
+    border: none;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: 500;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.75);
+    padding: 48px 40px 24px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 32px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 24px;
+  }
+  .footer-col h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #fff;
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-col ul li { font-size: 11px; opacity: 0.7; cursor: pointer; }
+  .footer-col ul li:hover { opacity: 1; }
+  .footer-social { display: flex; gap: 12px; margin-bottom: 16px; }
+  .social-icon { width: 28px; height: 28px; border: 1px solid rgba(255,255,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; cursor: pointer; color: rgba(255,255,255,0.7); transition: all .2s; }
+  .social-icon:hover { background: #fff; color: var(--dark); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 10px; opacity: 0.5; }
+  .footer-payments { display: flex; gap: 8px; align-items: center; }
+  .payment-icon { background: rgba(255,255,255,0.15); padding: 4px 8px; border-radius: 3px; font-size: 10px; }
+
+  /* ── MISC ── */
+  .img-placeholder {
+    width: 100%; height: 100%;
+    background: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--mid-gray);
+    font-size: 20px;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="top-bar">
+  <div class="top-bar-search">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    ¿Qué estás buscando?
+  </div>
+  <div class="top-bar-logo">
+    <span style="font-family:var(--font-display);font-size:18px;letter-spacing:0.15em;">BARRO</span>
+  </div>
+  <div class="top-bar-cart">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+    0
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <a href="#">TODO VAJILLA</a>
+  <a href="#">TODO EN PORCELANA</a>
+  <a href="#">TODO EN GRES</a>
+  <a href="#">TODO EN CERÁMICA</a>
+  <a href="#">LIMPIAR</a>
+  <a href="#">BIT STORE</a>
+  <a href="#">PLATOS PARA RESTAURANTES</a>
+  <a href="#">PLATERÍA PARA RESTAURANTES</a>
+  <a href="#">APRENDE</a>
+</nav>
+
+<!-- ANNOUNCEMENT -->
+<div class="announcement">Tu carrito de compras</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <h1>Por si necesitabas una señal para renovar tu mesa,</h1>
+    </div>
+    <div class="hero-right">acá está.</div>
+  </div>
+  <div class="hero-dots">
+    <div class="hero-dot active"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-dot"></div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories">
+  <div class="section-title">
+    Categorías
+    <div class="info-icon">i</div>
+  </div>
+  <div class="cat-grid">
+    <div class="cat-item">
+      <div class="cat-thumb">
+        <img src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?w=200&q=80" alt="Platos Llanos"/>
+      </div>
+      <div class="cat-label">Plato Llano</div>
+    </div>
+    <div class="cat-item">
+      <div class="cat-thumb">
+        <img src="https://images.unsplash.com/photo-1566837945700-30057527ade0?w=200&q=80" alt="Plato Hondo"/>
+      </div>
+      <div class="cat-label">Plato Hondo</div>
+    </div>
+    <div class="cat-item">
+      <div class="cat-thumb">
+        <img src="https://images.unsplash.com/photo-1517256673644-36ad11246d21?w=200&q=80" alt="Taza Café"/>
+      </div>
+      <div class="cat-label">Taza Café</div>
+    </div>
+    <div class="cat-item">
+      <div class="cat-thumb">
+        <img src="https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?w=200&q=80" alt="Tazón"/>
+      </div>
+      <div class="cat-label">Tazón</div>
+    </div>
+    <div class="cat-item">
+      <div class="cat-thumb">
+        <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=200&q=80" alt="Fuentes"/>
+      </div>
+      <div class="cat-label">Fuentes</div>
+    </div>
+    <div class="cat-item">
+      <div class="cat-thumb">
+        <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=200&q=80" alt="Sale de Cerámica"/>
+      </div>
+      <div class="cat-label">Sale de Cerámica</div>
+    </div>
+    <div class="cat-item">
+      <div class="cat-thumb">
+        <img src="https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=200&q=80" alt="Vajilla Sets"/>
+      </div>
+      <div class="cat-label">Vajilla Sets</div>
+    </div>
+    <div class="cat-item">
+      <div class="cat-thumb">
+        <img src="https://images.unsplash.com/photo-1515702000262-8e99c99a7f6e?w=200&q=80" alt="Todo en Tea"/>
+      </div>
+      <div class="cat-label">Todo en Tea / Tazas</div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY BANNER -->
+<section class="story-banner">
+  <div class="story-banner-img">
+    <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Ceramica"/>
+  </div>
+  <div class="story-banner-text">
+    <h2>cada pieza,<br/>una historia única</h2>
+  </div>
+</section>
+
+<!-- PRODUCTS GRID 1 -->
+<section class="products-section">
+  <div class="products-grid">
+    <!-- Card 1 -->
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?w=400&q=80" alt="Plato"/>
+        <span class="product-badge">NEW</span>
+      </div>
+      <div class="product-info">
+        <div class="product-meta">OFT 3S·OT · 16 cuotas</div>
+        <div class="product-name">Plato Llano Gres Antracita 26cm</div>
+        <div class="product-price"><span class="original">$8.644</span> <span class="sale">$6.450</span></div>
+        <div class="product-installment"><span>6 x $1.500,20</span> sin interés</div>
+      </div>
+    </div>
+    <!-- Card 2 -->
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1517256673644-36ad11246d21?w=400&q=80" alt="Taza"/>
+        <span class="product-badge">HOT</span>
+      </div>
+      <div class="product-info">
+        <div class="product-meta">OFT 4513 · 16 cuotas</div>
+        <div class="product-name">Taza de Café con Plato Nórdica</div>
+        <div class="product-price"><span class="original">$14.200</span> <span class="sale">$8.990</span></div>
+        <div class="product-installment"><span>6 x $2.100,16</span> sin interés</div>
+      </div>
+    </div>
+    <!-- Card 3 -->
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?w=400&q=80" alt="Bowl"/>
+      </div>
+      <div class="product-info">
+        <div class="product-meta">GPLETTQFTTP-78-4.5° / juego de 6</div>
+        <div class="product-name">Bowl Gres Cerámica Set x6</div>
+        <div class="product-price">$8.847 <span class="sale">$7.390</span></div>
+        <div class="product-installment"><span>6 x $1.750,27</span> sin interés</div>
+      </div>
+    </div>
+    <!-- Card 4 -->
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=400&q=80" alt="Fuente"/>
+        <span class="product-badge">NEW</span>
+      </div>
+      <div class="product-info">
+        <div class="product-meta">OFT 1147 · Porcelana</div>
+        <div class="product-name">Fuente Ovalada Porcelana Blanca</div>
+        <div class="product-price"><span class="original">$44.226</span> <span class="sale">$33.170</span></div>
+        <div class="product-installment"><span>6 x $5.571,51</span> sin interés</div>
+      </div>
+    </div>
+    <!-- Card 5 -->
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1580657018950-c7f7d6a6d990?w=400&q=80" alt="Bol"/>
+      </div>
+      <div class="product-info">
+        <div class="product-meta">Cerámica</div>
+        <div class="product-name">Bol Artesanal Espesado Azul</div>
+        <div class="product-price">$4.480</div>
+        <div class="product-installment"><span>3 x $1.522,PREST</span> sin interés</div>
+      </div>
+    </div>
+    <!-- Card 6 -->
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400&q=80" alt="Taza Cappu"/>
+        <span class="product-badge">NEW</span>
+      </div>
+      <div class="product-info">
+        <div class="product-meta">OFT B3341 · juego de 3</div>
+        <div class="product-name">Tazas Cappuccino Set x2 Gres</div>
+        <div class="product-price"><span class="original">$3.965,688</span> <span class="sale">$22.450</span></div>
+        <div class="product-installment"><span>3 x 12% PREST</span> sin interés</div>
+      </div>
+    </div>
+    <!-- Card 7 -->
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?w=400&q=80" alt="Plato Gres 2"/>
+      </div>
+      <div class="product-info">
+        <div class="product-meta">POTAL | Mesa Cruz</div>
+        <div class="product-name">Plato de Postre Gres Granito</div>
+        <div class="product-price">$75.350</div>
+        <div class="product-installment"><span>6 x $342.525</span> sin interés</div>
+      </div>
+    </div>
+    <!-- Card 8 -->
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&q=80" alt="Mug"/>
+      </div>
+      <div class="product-info">
+        <div class="product-meta">GBKL | Dense Gres</div>
+        <div class="product-name">Mug Gres 350ml Mate Natural</div>
+        <div class="product-price">$844.070</div>
+        <div class="product-installment"><span>6 x $342.525</span> sin interés</div>
+      </div>
+    </div>
+    <!-- Card 9 -->
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1517256673644-36ad11246d21?w=400&q=80" alt="Taza color"/>
+      </div>
+      <div class="product-info">
+        <div class="product-meta">GWTAZ | 16 cuotas</div>
+        <div class="product-name">Taza de té Japonesa Gres</div>
+        <div class="product-price"><span class="original">$54.240</span> <span class="sale">$44.228</span></div>
+        <div class="product-installment"><span>6 x $17.071 de interés</span></div>
+      </div>
+    </div>
+    <!-- Card 10 -->
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?w=400&q=80" alt="Bowl Oscu"/>
+      </div>
+      <div class="product-info">
+        <div class="product-meta">GMBL | Gres Carbón</div>
+        <div class="product-name">Cuenco Gres Profundo 20cm</div>
+        <div class="product-price"><span class="original">$50.350</span> <span class="sale">$44.228</span></div>
+        <div class="product-installment"><span>6 x $17.071 de interés</span></div>
+      </div>
+    </div>
+    <!-- Card 11 -->
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=400&q=80" alt="Tetera"/>
+      </div>
+      <div class="product-info">
+        <div class="product-meta">GWTET | café artesano</div>
+        <div class="product-name">Tetera Cerámica 700ml Negra</div>
+        <div class="product-price">$394 240</div>
+        <div class="product-installment"><span>6 x $342.525 de interés</span></div>
+      </div>
+    </div>
+    <!-- Card 12 -->
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1580657018950-c7f7d6a6d990?w=400&q=80" alt="Plato Liso"/>
+      </div>
+      <div class="product-info">
+        <div class="product-meta">GMPL | Gres Tea</div>
+        <div class="product-name">Plato Hondo Gres Tea 22cm</div>
+        <div class="product-price"><span class="original">$54.240</span> <span class="sale">$44.228</span></div>
+        <div class="product-installment"><span>6 x $17.071 de interés</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAGLINE -->
+<div class="tagline">diseño único, calidad excepcional</div>
+
+<!-- NEW IN -->
+<section class="new-in">
+  <div class="new-in-header">
+    <h3>New In</h3>
+    <div class="slider-arrows">
+      <button class="arrow-btn">&#8592;</button>
+      <button class="arrow-btn">&#8594;</button>
+    </div>
+  </div>
+  <div class="new-in-grid">
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?w=400&q=80" alt="New 1"/>
+        <span class="product-badge">NEW</span>
+      </div>
+      <div class="product-info">
+        <div class="product-meta">OFT 1734-MSS · 16 cuotas</div>
+        <div class="product-name">Set Vajilla Gres Antracita x4</div>
+        <div class="product-price"><span class="original">$89.110</span> <span class="sale">$68.119</span></div>
+        <div class="product-installment"><span>6 x $16.200,20</span> sin interés</div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400&q=80" alt="New 2"/>
+        <span class="product-badge">NEW</span>
+      </div>
+      <div class="product-info">
+        <div class="product-meta">OFT - libre elección</div>
+        <div class="product-name">Bowl Esmaltado Borde Orgánico</div>
+        <div class="product-price"><span class="original">$38.590</span> <span class="sale">$28.207</span></div>
+        <div class="product-installment"><span>6 x $6.500,16</span> sin interés</div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=400&q=80" alt="New 3"/>
+        <span class="product-badge">NEW</span>
+      </div>
+      <div class="product-info">
+        <div class="product-meta">OFT · 3 Piezas inicio</div>
+        <div class="product-name">Cuenco Gres Moteado Blanco</div>
+        <div class="product-price"><span class="original">$46.120</span> <span class="sale">$34.228</span></div>
+        <div class="product-installment"><span>6 x $7.471 de interés</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCT -->
+<section class="featured-product">
+  <div class="featured-left">
+    <div class="featured-thumbs">
+      <div class="featured-thumb active">
+        <img src="https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?w=200&q=80" alt="t1"/>
+      </div>
+      <div class="featured-thumb">
+        <img src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?w=200&q=80" alt="t2"/>
+      </div>
+    </div>
+    <div class="featured-main-img">
+      <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80" alt="OIA Bowl"/>
+    </div>
+  </div>
+  <div class="featured-info">
+    <div class="brand">OIA | Bowl Gres</div>
+    <h2>OIA | Bowl Gres</h2>
+    <p>Un bowl de gres de alta temperatura con acabado mate interior y esmaltado a mano. Apto para lavavajillas, microondas y horno. Pieza artesanal única con leves variaciones naturales.</p>
+    <div style="font-size:11px;color:var(--mid-gray);margin-bottom:8px;">● CALIDAD ARTESANAL · COLORES A ELECCIÓN · 5 Colores disponibles</div>
+    <div class="featured-price-main"><span class="original">$68.221</span> $52.327</div>
+    <div class="featured-installment">3 x <span>$8.762,17</span> sin interés</div>
+    <div class="qty-selector">
+      <button class="qty-btn">−</button>
+      <span class="qty-num">1</span>
+      <button class="qty-btn">+</button>
+    </div>
+    <button class="btn-add-cart">Agregar al carrito</button>
+  </div>
+</section>
+
+<!-- FULL WIDTH GALLERY -->
+<div class="fullwidth-gallery">
+  <div class="gallery-half">
+    <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Gres"/>
+  </div>
+  <div class="gallery-half">
+    <img src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?w=800&q=80" alt="Ceramica"/>
+  </div>
+</div>
+
+<!-- WIDE CATEGORIES -->
+<div class="wide-cats">
+  <div class="wide-cat-block">
+    <h3>Todo en gres</h3>
+    <p>Calidad y resistencia con acabados artesanales únicos para tu mesa diaria.</p>
+    <button class="btn-outline">Conocé más</button>
+  </div>
+  <div class="wide-cat-block">
+    <h3>Todo en Cerámica</h3>
+    <p>Calidad y resistencia con acabados artesanales únicos, perfecto para cada momento.</p>
+    <button class="btn-outline">Conocé más</button>
+  </div>
+</div>
+
+<!-- FEATURED COLLECTIONS -->
+<section class="collections">
+  <div class="section-title" style="margin-bottom:24px;">Nuestras colecciones destacadas</div>
+  <div class="coll-grid">
+    <div class="coll-card">
+      <img src="https://images.unsplash.com/photo-1580657018950-c7f7d6a6d990?w=400&q=80" alt="Coll 1"/>
+      <div class="coll-label">Gres Natural</div>
+    </div>
+    <div class="coll-card">
+      <img src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?w=400&q=80" alt="Coll 2"/>
+      <div class="coll-label">Negro Carbón</div>
+    </div>
+    <div class="coll-card">
+      <img src="https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=400&q=80" alt="Coll 3"/>
+      <div class="coll-label">Cerámica Color</div>
+    </div>
+    <div class="coll-card">
+      <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400&q=80" alt="Coll 4"/>
+      <div class="coll-label">Porcelana Fina</div>
+    </div>
+    <div class="coll-card">
+      <img src="https://images.unsplash.com/photo-1566837945700-30057527ade0?w=400&q=80" alt="Coll 5"/>
+      <div class="coll-label">Terra Rosa</div>
+    </div>
+    <div class="coll-card">
+      <img src="https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?w=400&q=80" alt="Coll 6"/>
+      <div class="coll-label">Azul Cobalto</div>
+    </div>
+    <div class="coll-card">
+      <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400&q=80" alt="Coll 7"/>
+      <div class="coll-label">Antracita</div>
+    </div>
+    <div class="coll-card">
+      <img src="https://images.unsplash.com/photo-1580657018950-c7f7d6a6d990?w=400&q=80" alt="Coll 8"/>
+      <div class="coll-label">Miel & Tostado</div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits">
+  <div class="benefit-item">
+    <div class="benefit-icon">🚚</div>
+    <div class="benefit-title">Envíos</div>
+    <div class="benefit-desc">A todo el país</div>
+  </div>
+  <div class="benefit-item">
+    <div class="benefit-icon">🏷️</div>
+    <div class="benefit-title"><span class="benefit-highlight">20% OFF</span></div>
+    <div class="benefit-desc">En tu primera compra</div>
+  </div>
+  <div class="benefit-item">
+    <div class="benefit-icon">💳</div>
+    <div class="benefit-title">Cuotas</div>
+    <div class="benefit-desc">Hasta 12 cuotas sin interés</div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="newsletter-content">
+    <p>Recibí todas las ofertas</p>
+    <div class="newsletter-logo">BARRO</div>
+    <div class="newsletter-form">
+      <input type="email" placeholder="Email"/>
+      <button>Enviar</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Seguinos</h4>
+      <div class="footer-social">
+        <div class="social-icon">f</div>
+        <div class="social-icon">in</div>
+      </div>
+      <ul>
+        <li>Inicio</li>
+        <li>Todo en Gres</li>
+        <li>Todo en Cerámica</li>
+        <li>Vajilla Sets</li>
+        <li>Platos para Restaurantes</li>
+        <li>Hogar Artesanal</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Nuestros productos</h4>
+      <ul>
+        <li>Plato Llano Gres</li>
+        <li>Plato Hondo Gres</li>
+        <li>Taza Café con Plato</li>
+        <li>Bowl Artesanal</li>
+        <li>Fuentes</li>
+        <li>Sets de Vajilla</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Más información</h4>
+      <ul>
+        <li>Preguntas frecuentes</li>
+        <li>Política de envíos</li>
+        <li>Devoluciones</li>
+        <li>Términos y condiciones</li>
+        <li>Privacidad</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li>hola@barroalfareria.ar</li>
+        <li>+54 11 0000-0000</li>
+        <li>Lun–Vie 10 a 18h</li>
+        <li style="margin-top:8px;">Instagram: @barroalfareria</li>
+        <li>TikTok / FB / Pinterest: @barroalfareria</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Beneficia al vendedor</h4>
+      <ul style="margin-bottom:16px;">
+        <li>Comprar en cuotas</li>
+        <li>Envíos gratis +$X</li>
+        <li>Devolución sin costo</li>
+      </ul>
+      <button style="background:#fff;color:var(--dark);border:none;padding:8px 16px;font-size:11px;cursor:pointer;font-family:var(--font-body);">Vender</button>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>Copyright © 2025 Barro Alfareria. Todos los derechos reservados.</span>
+    <div class="footer-payments">
+      <span class="payment-icon">VISA</span>
+      <span class="payment-icon">MC</span>
+      <span class="payment-icon">AMEX</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
