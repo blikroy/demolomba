@@ -146,7 +146,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   console.log('Ganga Home Clone loaded successfully!');
 });
+const logo = document.getElementById("logo");
 
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 0) {
+    logo.style.height = "50px";
+  } else {
+    logo.style.height = "";
+  }
+});
 // Add additional styles for mobile nav
 const mobileStyles = document.createElement('style');
 mobileStyles.textContent = `

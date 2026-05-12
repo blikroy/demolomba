@@ -39,7 +39,9 @@ a {
   text-decoration: none;
   color: inherit;
 }
-
+#logo {
+  transition: all 40s ease;
+}
 ul {
   list-style: none;
 }
